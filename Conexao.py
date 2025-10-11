@@ -36,10 +36,11 @@ class Atendimento(db.Entity):
     pet = Required(Pet)
     funcionario = Required(Funcionario)
     data = Required(str)
+    horario = Required(str)
     servico = Required(str)
     valor = Required(float)
 
     def __str__(self):
-        return f"ID: {self.id}, Pet: {self.pet.nome}, Funcionário: {self.funcionario.nome}, Data: {self.data}, Serviço: {self.servico}, Valor: R${self.valor}\n"
+        return f"ID: {self.id}, Pet: {self.pet.nome}, Funcionário: {self.funcionario.nome}, Data: {self.data}, Horário: {self.horario}, Serviço: {self.servico}, Valor: R${self.valor}\n"
 
 db.generate_mapping(create_tables=True)
