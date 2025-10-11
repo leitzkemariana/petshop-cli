@@ -81,6 +81,21 @@ def verificarFuncionario():
 
     return funcionario
 
+def verificarAtendimento(funcionario):
+    while True:
+        data = str(input("Data: "))
+        hora = str(input("Horário (hh:mm): "))
+        funcionario = funcionario
+
+        conflito = Atendimento.select(lambda a: a.data == data and a.horario == hora and a.funcionario == funcionario).exists()
+
+        if conflito:
+            print("Horário indisponível: já existe um atendimento marcado para este funcionário.")
+
+        else:
+            print("Horário disponível")
+            return data, hora     
+
 while True:
     print("=" * 40)
     print("MENU PRINCIPAL".center(40))
@@ -252,18 +267,20 @@ while True:
                             print(verificarPet())
 
                     elif menuFunc == 9:
-                        data = str(input("Data: "))
-                        servico = str(input("Tipo de atendimento: "))
-
-                        while True:
-                            try:
-                                valor = float(input("Valor: "))
-                                break
-                            except ValueError:
-                                print("Valor inválido! Use ponto (.) para decimais")
-
                         with db_session:
-                            Atendimento(pet=verificarPet(), funcionario=verificarFuncionario(), data=data, servico=servico, valor=valor)
+                            funcionario = verificarFuncionario()
+                            data, hora = verificarAtendimento(funcionario)
+                            servico = str(input("Tipo de atendimento: "))
+
+                            while True:
+                                try:
+                                    valor = float(input("Valor: "))
+                                    break
+                                except ValueError:
+                                    print("Valor inválido! Use ponto (.) para decimais")
+
+                        
+                            Atendimento(pet=verificarPet(), funcionario=funcionario, data=data, horario=hora, servico=servico, valor=valor)
                             print("Atendimento marcado com sucesso!")
                     
                     elif menuFunc == 10:
@@ -301,18 +318,19 @@ while True:
                     menuFunc = verificador(0, 4)
 
                     if menuFunc == 1:
-                        data = str(input("Data: "))
-                        servico = str(input("Tipo de atendimento: "))
-
-                        while True:
-                            try:
-                                valor = float(input("Valor: "))
-                                break
-                            except ValueError:
-                                print("Valor inválido! Use ponto (.) para decimais")
-
                         with db_session:
-                            Atendimento(pet=verificarPet(), funcionario=Funcionario.get(nome=nomeFuncionario), data=data, servico=servico, valor=valor)
+                            funcionario = Funcionario.get(nome=nomeFuncionario)
+                            data, hora = verificarAtendimento(funcionario)
+                            servico = str(input("Tipo de atendimento: "))
+
+                            while True:
+                                try:
+                                    valor = float(input("Valor: "))
+                                    break
+                                except ValueError:
+                                    print("Valor inválido! Use ponto (.) para decimais")
+
+                            Atendimento(pet=verificarPet(), funcionario=funcionario, data=data, horario = hora, servico=servico, valor=valor)
                             print("Atendimento marcado com sucesso!")
 
                     elif menuFunc == 2:
