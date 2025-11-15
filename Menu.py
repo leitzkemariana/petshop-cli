@@ -26,7 +26,7 @@ def verificador(min, max):
         try:
             op = int(input("Opção: "))
 
-            if op <= min or op > max:
+            if op < min or op > max:
                 print("Digite um valor válido!")
                 continue 
             break
@@ -105,7 +105,7 @@ while True:
     print("3 - Sair")
     print("=" * 40)
 
-    menu = verificador(0,3)
+    menu = verificador(1,3)
 
     if menu == 1:
         nomeFuncionario = str(input("Nome: "))
@@ -124,7 +124,7 @@ while True:
                     print("3 - Sair")
                     print("=" * 40)
 
-                    menuFunc = verificador(0,3)
+                    menuFunc = verificador(1,3)
                     
                     if menuFunc == 1:
                         nomeFunc = str(input("Nome do funcionário: "))
@@ -164,7 +164,7 @@ while True:
                     print("12 - Sair")
                     print("=" * 40)
 
-                    menuFunc = verificador(0, 12)
+                    menuFunc = verificador(1, 12)
 
                     if menuFunc == 1:
                         nomeCliente = str(input("Nome: "))
@@ -185,7 +185,7 @@ while True:
                             print("3 - Editar telefone")
                             print("4 - Editar senha")
 
-                            edicao = verificador(0,4)
+                            edicao = verificador(1,4)
                         
                             if edicao == 1:
                                 novoNome = str(input("Novo nome: "))
@@ -233,7 +233,7 @@ while True:
                             print("4 - Editar data de nascimento")
                             print("5 - Editar dono")
 
-                            edicao = verificador(0,5)
+                            edicao = verificador(1,5)
 
                             if edicao == 1:
                                 novoNome = str(input("Novo nome: "))
@@ -269,6 +269,7 @@ while True:
                     elif menuFunc == 9:
                         with db_session:
                             funcionario = verificarFuncionario()
+
                             data, hora = verificarAtendimento(funcionario)
                             servico = str(input("Tipo de atendimento: "))
 
@@ -315,10 +316,11 @@ while True:
                     print("4 - Sair")
                     print("=" * 40)
 
-                    menuFunc = verificador(0, 4)
+                    menuFunc = verificador(1, 4)
 
                     if menuFunc == 1:
                         with db_session:
+                        
                             funcionario = Funcionario.get(nome=nomeFuncionario)
                             data, hora = verificarAtendimento(funcionario)
                             servico = str(input("Tipo de atendimento: "))
@@ -370,7 +372,7 @@ while True:
                 print("3 - Sair")
                 print("=" * 40)
 
-                menuCliente = verificador(0, 3)
+                menuCliente = verificador(1, 3)
 
                 if menuCliente == 1:
                     with db_session:
